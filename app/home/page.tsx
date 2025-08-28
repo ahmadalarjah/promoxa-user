@@ -285,33 +285,7 @@ export default function HomePage() {
             </Button>
           </Link>
 
-          {/* News Section */}
-          <Card className="bg-card-custom border-golden/20 p-4">
-            <h3 className="text-golden font-semibold mb-3">{t('home.news')}</h3>
-            <div className="space-y-3">
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-golden rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <p className="text-white text-sm">{t('home.news.feature')}</p>
-                  <p className="text-gray-400 text-xs">{t('home.news.2hoursAgo')}</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-golden rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <p className="text-white text-sm">{t('home.news.update')}</p>
-                  <p className="text-gray-400 text-xs">{t('home.news.1dayAgo')}</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-golden rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <p className="text-white text-sm">{t('home.news.offers')}</p>
-                  <p className="text-gray-400 text-xs">{t('home.news.3daysAgo')}</p>
-                </div>
-              </div>
-            </div>
-          </Card>
+
         </div>
 
         {/* Enhanced Bottom Navigation */}
