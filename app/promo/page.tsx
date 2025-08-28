@@ -222,43 +222,7 @@ export default function PromoPage() {
           </div>
         </Card>
 
-        {/* Special Offers */}
-        <Card className="bg-card-custom border-golden/20 p-6 mt-6">
-          <h3 className="text-golden font-semibold mb-4">{t('promo.specialOffers')}</h3>
-          <div className="space-y-4">
-            <div key="offer-welcome" className="p-4 bg-gradient-to-r from-golden/10 to-transparent rounded-lg border border-golden/20">
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="text-white font-semibold">{t('promo.welcomeOffer')}</h4>
-                <Badge variant="outline" className="text-success border-success">
-                  {t('promo.new')}
-                </Badge>
-              </div>
-              <p className="text-gray-400 text-sm mb-3">
-                {t('promo.welcomeOfferDesc')}
-              </p>
-              <div className="flex items-center space-x-2 text-sm">
-                <Clock className="w-4 h-4 text-gray-400" />
-                <span className="text-gray-400">{t('promo.newUsersOnly')}</span>
-              </div>
-            </div>
 
-            <div key="offer-referral" className="p-4 bg-gradient-to-r from-info/10 to-transparent rounded-lg border border-info/20">
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="text-white font-semibold">{t('promo.referralOffer')}</h4>
-                <Badge variant="outline" className="text-info border-info">
-                  {t('promo.limited')}
-                </Badge>
-              </div>
-              <p className="text-gray-400 text-sm mb-3">
-                {t('promo.referralOfferDesc')}
-              </p>
-              <div className="flex items-center space-x-2 text-sm">
-                <Clock className="w-4 h-4 text-gray-400" />
-                <span className="text-gray-400">{t('promo.limitedTime')}</span>
-              </div>
-            </div>
-          </div>
-        </Card>
         </div>
       </div>
     </ProtectedRoute>
