@@ -40,7 +40,7 @@ class ChatService {
     this.isPolling = true;
 
     try {
-      const response = await fetch(`http://localhost:8080/api/community/messages?page=0&size=100`, {
+      const response = await fetch(`https://api.promoxa.org/api/community/messages?page=0&size=100`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
         }
@@ -96,7 +96,7 @@ class ChatService {
 
   public async sendMessage(content: string) {
     try {
-      const response = await fetch('http://localhost:8080/api/community/messages', {
+      const response = await fetch('https://api.promoxa.org/api/community/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
