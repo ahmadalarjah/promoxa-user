@@ -242,7 +242,7 @@ export default function HomePage() {
           {/* Statistics Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {statsData.map((stat, index) => (
-              <Card key={index} className="bg-card-custom border-golden/20 p-3 sm:p-4">
+              <Card key={index} className={`bg-card-custom border-golden/20 p-3 sm:p-4 ${index === 4 ? 'col-span-2 sm:col-span-1 lg:col-span-1' : ''}`}>
                 <div className="flex items-center justify-between">
                   <div className="flex-1 min-w-0">
                     <p className="text-xs sm:text-sm text-gray-400 truncate">{stat.title}</p>
