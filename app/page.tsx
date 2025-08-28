@@ -106,28 +106,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Stats Section */}
-      <div className="bg-card-custom border-t border-golden/20 py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-golden mb-2">10,000+</div>
-              <div className="text-gray-400">Active Users</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-golden mb-2">$2M+</div>
-              <div className="text-gray-400">Total Earnings</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-golden mb-2">4.9</div>
-              <div className="text-gray-400 flex items-center justify-center">
-                <Star className="w-5 h-5 text-golden mr-1" />
-                User Rating
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
 
       {/* CTA Section */}
       <div className="max-w-6xl mx-auto px-4 py-20 text-center">
