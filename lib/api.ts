@@ -533,11 +533,7 @@ class ApiService {
     return this.request<any>('/orders/health')
   }
 
-  async generateTasks(): Promise<ApiResponse<any>> {
-    return this.request<any>('/orders/generate-tasks', {
-      method: 'POST',
-    })
-  }
+
 
   async refreshDailyTasks(): Promise<ApiResponse<any>> {
     return this.request<any>('/orders/refresh-daily-tasks', {
