@@ -267,7 +267,7 @@ export default function SupportPage() {
               </div>
               <div className="flex items-start space-x-2">
                 <div className="w-2 h-2 bg-golden rounded-full mt-2 flex-shrink-0"></div>
-                <p>{t('support.urgentContact')}</p>
+        
               </div>
             </div>
           </Card>
