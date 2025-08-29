@@ -525,7 +525,7 @@ const translations = {
     'support.createFirstTicket': 'إنشاء أول تذكرة',
     'support.messages': 'رسائل',
     'support.anytimeMessage': 'يمكنك إرسال رسائل في أي وقت وسيتم الرد عليها',
-    'support.urgentContact': 'للمشاكل العاجلة، يرجى الاتصال على: +966-XX-XXX-XXXX',
+
     
     // Promo Codes
     'promo.title': 'الأكواد الترويجية',
@@ -1154,7 +1154,7 @@ const translations = {
     'support.createFirstTicket': 'Create First Ticket',
     'support.messages': 'messages',
     'support.anytimeMessage': 'You can send messages anytime and they will be responded to',
-    'support.urgentContact': 'For urgent issues, please call: +966-XX-XXX-XXXX',
+
     
     // Notifications
     'notifications.title': 'Notifications',
