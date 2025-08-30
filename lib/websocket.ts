@@ -41,6 +41,9 @@ class ChatService {
 
     try {
       const response = await fetch(`https://api.promoxa.org/api/community/messages?page=0&size=100`, {
+
+
+        
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
         }
