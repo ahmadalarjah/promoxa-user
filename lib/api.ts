@@ -1,7 +1,7 @@
 import { cache, CACHE_CONFIG, CACHE_KEYS } from './cache'
 
 // API Base Configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.promoxa.org/api'
+const API_BASE_URL = 'https://api.promoxa.org/api'
 
 // API Response Types
 export interface ApiResponse<T> {
@@ -83,6 +83,8 @@ export interface TeamMember {
 export interface Deposit {
   id: number
   amount: number
+  bonusAmount?: number
+  isFirstDeposit?: boolean
   status: 'pending' | 'confirmed' | 'rejected'
   createdAt: string
   confirmedAt?: string
@@ -337,6 +339,42 @@ class ApiService {
       return {
         success: false,
         error: 'Invalid response format'
+      }
+    }
+  }
+  
+  // Referral Code Validation
+  async validateReferralCode(referralCode: string): Promise<ApiResponse<{
+    valid: boolean
+    message: string
+    referrerName?: string
+    referrerUsername?: string
+  }>> {
+    try {
+      const url = `${API_BASE_URL}/auth/validate-referral-code/${referralCode}`
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: this.getHeaders(),
+      })
+
+      if (!response.ok) {
+        return {
+          success: false,
+          error: `HTTP ${response.status}: ${response.statusText}`
+        }
+      }
+
+      const validationData = await response.json()
+      
+      return {
+        success: true,
+        data: validationData
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error occurred'
       }
     }
   }
@@ -673,6 +711,19 @@ class ApiService {
 
   async checkPromoCodeUsed(code: string): Promise<ApiResponse<boolean>> {
     return this.request<boolean>(`/promo/check/${code}`)
+  }
+
+  // Community Access Check
+  async checkCommunityAccess(): Promise<ApiResponse<{
+    hasAccess: boolean
+    message: string
+    currentPlan?: {
+      id: number
+      name: string
+      price: string
+    }
+  }>> {
+    return this.request('/community/access')
   }
 
   // Community Chat - Fixed endpoints
