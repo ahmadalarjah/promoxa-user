@@ -9,8 +9,8 @@ import { NotificationProvider } from "@/contexts/NotificationContext"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "PROMOXA - منصة العملات الرقمية",
-  description: "منصة شاملة لإدارة العملات الرقمية والاستثمار",
+  title: "SMART DIGITAL PROMOTION PLATFORM",
+  description: "Advanced digital promotion platform with AI-powered features",
   generator: "v0.app",
 }
 
