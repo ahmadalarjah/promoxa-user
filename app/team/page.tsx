@@ -148,7 +148,7 @@ export default function TeamPage() {
         {/* Referral System Info */}
         <Card className="bg-card-custom border-golden/20 p-4 mb-6">
           <h3 className="text-golden font-semibold mb-3">{t('team.referralSystem')}</h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="text-center p-3 bg-[#1a1a1a] rounded-lg">
               <Crown className="w-8 h-8 text-success mx-auto mb-2" />
               <h4 className="text-white font-semibold">{t('team.level1')}</h4>
@@ -161,6 +161,11 @@ export default function TeamPage() {
               <p className="text-info font-bold">6%</p>
               <p className="text-gray-400 text-sm">{t('team.indirect')}</p>
             </div>
+          </div>
+          <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+            <p className="text-blue-400 text-sm text-center">
+              💡 {t('team.totalIncludesAllLevels') || 'إجمالي الأعضاء يشمل جميع المستويات في شجرة الإحالة'}
+            </p>
           </div>
         </Card>
 
