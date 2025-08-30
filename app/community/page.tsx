@@ -72,6 +72,15 @@ export default function CommunityPage() {
     hasMore: true
   })
   const [showScrollTop, setShowScrollTop] = useState(false)
+  
+  // Plan access state
+  const [hasCommunityAccess, setHasCommunityAccess] = useState<boolean | null>(null)
+  const [accessLoading, setAccessLoading] = useState(true)
+  const [currentPlan, setCurrentPlan] = useState<{
+    id: number
+    name: string
+    price: string
+  } | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
   const loadingRef = useRef<HTMLDivElement>(null)
@@ -651,9 +660,102 @@ export default function CommunityPage() {
     }
   }
 
+  // Check community access
+  const checkAccess = async () => {
+    try {
+      setAccessLoading(true)
+      const response = await apiService.checkCommunityAccess()
+      if (response.success && response.data) {
+        setHasCommunityAccess(response.data.hasAccess)
+        setCurrentPlan(response.data.currentPlan || null)
+        
+        if (!response.data.hasAccess) {
+          setError(response.data.message || "يجب أن يكون لديك خطة مشترك فيها للوصول إلى المجتمع")
+        }
+      } else {
+        setError("فشل في التحقق من صلاحية الوصول للمجتمع")
+        setHasCommunityAccess(false)
+      }
+    } catch (error) {
+      setError("حدث خطأ أثناء التحقق من صلاحية الوصول للمجتمع")
+      setHasCommunityAccess(false)
+    } finally {
+      setAccessLoading(false)
+    }
+  }
+
   useEffect(() => {
-    loadMessages(true)
+    checkAccess()
   }, [])
+
+  useEffect(() => {
+    if (hasCommunityAccess) {
+      loadMessages(true)
+    }
+  }, [hasCommunityAccess])
+
+  // Show loading state while checking access
+  if (accessLoading) {
+    return (
+      <ProtectedRoute>
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+          <NavigationHeader 
+            title={t('community.title')}
+            onBack={() => window.history.back()}
+          />
+          <div className="flex items-center justify-center py-12">
+            <div className="flex flex-col items-center space-y-4">
+              <Loader2 className="w-8 h-8 text-golden animate-spin" />
+              <p className="text-gray-400 text-sm">{t('community.checkingAccess') || 'جاري التحقق من الصلاحية...'}</p>
+            </div>
+          </div>
+        </div>
+      </ProtectedRoute>
+    )
+  }
+
+  // Show access denied screen
+  if (hasCommunityAccess === false) {
+    return (
+      <ProtectedRoute>
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+          <NavigationHeader 
+            title={t('community.title')}
+            onBack={() => window.history.back()}
+          />
+          <div className="flex items-center justify-center py-12 px-4">
+            <div className="max-w-md w-full text-center">
+              <div className="bg-gradient-to-br from-red-500/10 via-red-600/5 to-red-700/10 border-2 border-red-500/30 rounded-2xl p-8 backdrop-blur-sm">
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full flex items-center justify-center">
+                  <AlertCircle className="w-8 h-8 text-red-400" />
+                </div>
+                <h2 className="text-xl font-bold text-red-400 mb-4">
+                  {t('community.accessDenied') || 'الوصول مرفوض'}
+                </h2>
+                <p className="text-gray-300 mb-6 leading-relaxed">
+                  {error || t('community.planRequired') || 'يجب أن يكون لديك خطة مشترك فيها للوصول إلى المجتمع'}
+                </p>
+                <div className="space-y-3">
+                  <Link href="/plans">
+                    <Button className="w-full bg-gradient-to-r from-golden to-orange-500 hover:from-golden/90 hover:to-orange-500/90 text-black font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg">
+                      {t('community.viewPlans') || 'عرض الخطط المتاحة'}
+                    </Button>
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => window.history.back()}
+                    className="w-full border-gray-600 text-gray-300 hover:bg-gray-800/50 py-3 rounded-xl transition-all duration-200"
+                  >
+                    {t('common.goBack') || 'العودة'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ProtectedRoute>
+    )
+  }
 
   return (
     <ProtectedRoute>
@@ -665,20 +767,28 @@ export default function CommunityPage() {
             title={t('community.title')}
             onBack={() => window.history.back()}
           >
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                // Invalidate cache and force fresh load
-                invalidateChatMessages()
-                loadMessages(true, false) // Don't use cache
-              }}
-              disabled={refreshing}
-              className="text-golden hover:bg-golden/10 transition-colors"
-              title={t('common.refresh')}
-            >
-              <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-            </Button>
+            <div className="flex items-center space-x-2">
+              {/* Plan Status Badge */}
+              {currentPlan && (
+                <Badge className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 border-green-500/30 text-xs px-2 py-1">
+                  {currentPlan.name}
+                </Badge>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  // Invalidate cache and force fresh load
+                  invalidateChatMessages()
+                  loadMessages(true, false) // Don't use cache
+                }}
+                disabled={refreshing}
+                className="text-golden hover:bg-golden/10 transition-colors"
+                title={t('common.refresh')}
+              >
+                <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+              </Button>
+            </div>
           </NavigationHeader>
 
           {/* Error Display */}
