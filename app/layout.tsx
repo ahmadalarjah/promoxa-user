@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   title: "PROMOXA - منصة العملات الرقمية",
   description: "منصة شاملة لإدارة العملات الرقمية والاستثمار",
   generator: "v0.app",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({
